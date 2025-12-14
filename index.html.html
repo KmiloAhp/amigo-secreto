@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amigo Secreto 🎄</title>
+
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0b3d2e, #1c6b4f);
+    margin: 0;
+    padding: 15px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.snow {
+    position: fixed;
+    top: -10px;
+    color: #fff;
+    pointer-events: none;
+    animation: fall linear infinite;
+    z-index: 1;
+}
+
+@keyframes fall {
+    to { transform: translateY(120vh); }
+}
+
+.card {
+    background: #ffffff;
+    color: #333;
+    padding: 28px;
+    border-radius: 18px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,.3);
+    z-index: 2;
+    position: relative;
+}
+
+.card::before {
+    content: "🎄";
+    font-size: 48px;
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h2 {
+    color: #c0392b;
+    margin-bottom: 18px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    margin-top: 14px;
+    padding: 16px;
+    font-size: 17px;
+    background: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #a93226;
+}
+
+#resultado {
+    margin-top: 18px;
+    font-size: 19px;
+    font-weight: bold;
+    color: #145a32;
+}
+
+footer {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #777;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Amigo Secreto</h2>
+
+    <input id="nombre" placeholder="Tu nombre"
+        autocapitalize="none"
+        autocorrect="off"
+        autocomplete="off"
+        spellcheck="false">
+
+    <input id="clave" type="password" placeholder="Tu contraseña"
+        autocapitalize="none"
+        autocorrect="off"
+        autocomplete="off"
+        spellcheck="false">
+
+    <button type="button" onclick="revelar()">Ver resultado</button>
+
+    <div id="resultado"></div>
+    <footer>🎅 Feliz Navidad 🎅</footer>
+</div>
+
+<script>
+/* NIEVE */
+for (let i = 0; i < 30; i++) {
+    const s = document.createElement("div");
+    s.className = "snow";
+    s.textContent = "❄";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.fontSize = 12 + Math.random() * 16 + "px";
+    s.style.opacity = Math.random();
+    s.style.animationDuration = 6 + Math.random() * 8 + "s";
+    document.body.appendChild(s);
+}
+
+/* ASIGNACIONES FIJAS */
+const datos = {
+    camilo:  { amigo: "Valeria",  clave: "CAM18" },
+    jose:    { amigo: "Alison",   clave: "JOS77" },
+    valeria: { amigo: "Melany",   clave: "VAL25" },
+    alison:  { amigo: "Camilo",   clave: "ALI09" },
+    melany:  { amigo: "Jose",     clave: "MEL33" }
+};
+
+function revelar() {
+    const n = document.getElementById("nombre").value.trim().toLowerCase();
+    const c = document.getElementById("clave").value.trim();
+    const r = document.getElementById("resultado");
+
+    if (!datos[n] || datos[n].clave !== c) {
+        r.style.color = "#c0392b";
+        r.textContent = "Nombre o contraseña incorrectos";
+        return;
+    }
+
+    r.style.color = "#145a32";
+    r.textContent = "Tu amigo secreto es: " + datos[n].amigo;
+}
+</script>
+
+</body>
+</html>
